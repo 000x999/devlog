@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Devlog Research Notes</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="title-row">
+        <div class="title-image">
+          <img src="images/pfp.jpg" alt="Site portrait" />
+        </div>
+        <div class="title-text">
+          <h1 class="site-title">Devlog Research Notes</h1>
+          <p class="site-subtitle">Personal archive of coding experiments, research threads, and draft ideas.</p>
+        </div>
+      </div>
+      <nav class="site-nav">
+        <a href="homepage.html">HOME</a>
+      </nav>
+     </header>
+    <section class="intro" id="overview">
+      <div class="card">
+        <h3>Contact</h3>
+        <div class="mono">email:  r_elhel@live.concordia.ca</div>
+        <div class="mono">github: github.com/000x999</div>
+        <div class="mono">last updated: 2026-01-30</div>
+      </div>
+    </section>
+    <section class="section" id="devlog">
+      <h2 class="section-title">About Me</h2>
+      <ul class="entry-list">
+        <li><a href="#"></a><b>Name:</b> Ralph EH</li>
+        <li><a href="#"></a><b>Current position:</b> C++ SDK Software Engineer at Cognitive3D (Full Time)</li>
+        <li><a href="#"></a><b>Education:</b> Bachelor of Computer Science at Concordia University - Graduation date: Aug/Sep 2026</li>
+        <a href="https://www.github.com/000x999"><li><b>GitHub:</b> github.com/000x999</li></a>
+        <li><a href="#"></a><b>Languages:</b> C++ (12 years), Assembly, Fortran, Python, Haskell </li>
+        <li><a href="#"></a><b>HPC/GPU/Compilers:</b> CUDA, ROCm, 
+          Vulkan, OpenGL, Metal, OpenCL, AVX2/AVX512, SSE, NEON, OpenMP, OpenMPI, LLVM, MLIR</li>     
+        <li><a href="#"></a><b>Libraries:</b> Eigen, OpenCV, PyTorch, BLAS/LAPACK, Numpy, Scikit</li>
+        <li><a href="#"></a><b>Developer tools:</b> x64dbg, Ghidra, IDA Pro, 
+          NSight, Orbit Profiler, DTrace, Perf, CMake, Make</li>
+        <li><a href="#"></a><b>Interests:</b> Compiler Design, Code Generation, GPU Code Generation, SIMD, HPC, Optimization, Deep Learning Optimization, Compilers for Deep Learning, Math, Linear Algebra, Theoretical Computer Science
+        , Computer/Hardware Architecture</li>     
+        
+        <li><a href="#"></a><b>Graduate Research interests and Expected Focus:</b><p>
+          My research interests revolve around compilers, high-performance computing, and deep learning systems.
+          Specifically, I am interested in intermediate representations, JIT compilation, and code generation for deep
+          learning and HPC workloads targeting CPUs, GPUs, and custom accelerators such as FPGAs and TPUs.
+          Having spent considerable time manually optimizing SIMD kernels and memory layouts, I have developed
+          a strong appreciation for both the performance gains achievable through hardware-aware optimization and
+          the difficulty of scaling such efforts across architectures.<br>
+
+          My experience has made clear both the potential and limits of manual optimization. I can hand-write kernels
+          that utilize hardware effectively, but doing so for every operator, data type, and architecture is not scalable.
+          I am interested in how functional IRs and rewrite systems can be applied to deep learning compilation. I am also interested in how machine
+          learning can guide search through optimization spaces, and how memory-aware IR design enables efficient
+          accelerator code generation.</p>
+
+        <li><a href="#"></a><b>Technical Background and Projects:</b><p>
+          I am developing <b>cppDL</b>, a general-purpose deep learning inference library written entirely in C++ with no external ML dependencies. The system
+          includes a custom memory allocator, safetensor parser, BPE tokenizer, implementations of core neural network operations and high-performance tensor operations.<br> 
+          I validated the library by running <b>GPT-2 inference:</b>
+          <b>cppDL</b> achieves approximately  <b>35 tok/s</b> compared to PyTorch’s <b>19 tok/s</b> on the same hardware, an <b>86% improvement</b> in end-to-end latency <b>without KV Caching</b> on the CPU.<br>
+          When using KV Caching, <b>cppDL</b> achieves over <b>110 tok/s</b> compared to PyTorch's <b>60 tok/s</b> on the CPU.<br><br> 
+
+          This advantage does not come from faster matrix multiplication. PyTorch uses highly optimized BLAS
+          backends that exceed my implementation in raw GEMM throughput. The gains come from system-level
+          optimizations: static memory arenas eliminating allocation overhead, cache-friendly data layouts reducing
+          memory traffic, and a simplified execution path avoiding dispatch overhead. This highlighted an important
+          insight: end-to-end performance depends on the entire system, and there is significant room for compilerdriven optimization at the graph level.<br><br>
+          The backend for cppDL is CRUSHBLAS, a custom linear algebra library using <b>AVX2 and AVX-512 intrinsics</b>. 
+          I implemented GEMM kernels with register blocking, loop tiling, and cache-aware memory access
+          patterns. Benchmarked across large matrix sizes <b>(4096, 8192, and 16384)</b>, my kernels achieve a sustained
+          throughput of approximately <b>825 GFLOP/s</b> with OpenMP parallelization. I am currently extending this
+          work to GPUs, writing custom drivers for direct kernel dispatch to understand the execution model below
+          the CUDA/ROCm abstraction layer. Building these systems has taught me the micro-architectural details
+          compilers must reason about: port contention, latency hiding, cache utilization, and prefetching behavior. I
+          see this manual optimization experience as preparation for researching how to automate such decisions.
+        </p></li>
+
+       </ul>
+    </section>
+
+    <footer class="footer">
+    </footer>
+  </div>
+</body>
+</html>
